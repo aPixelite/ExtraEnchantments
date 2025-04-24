@@ -1,0 +1,112 @@
+package net.apixelite.extra.event;
+
+import net.apixelite.extra.entity.attribute.ModEntityAttributes;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class MiningEvent implements PlayerBlockBreakEvents.Before {
+    private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();
+
+    @Override
+    public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
+        ItemStack mainHandItem = player.getMainHandStack();
+        double mining_spread = player.getAttributeValue(ModEntityAttributes.MINING_SPREAD);
+        double mining_depth = player.getAttributeValue(ModEntityAttributes.MINING_DEPTH);
+
+        if (player instanceof ServerPlayerEntity serverPlayer) {
+            if (true) {
+                if (HARVESTED_BLOCKS.contains(pos)) {
+                    return true;
+                }
+
+                for (BlockPos position : getBlocksToBeDestroyed(((int) mining_spread), ((int) mining_depth), pos, serverPlayer)) {
+                    if (pos == position || !mainHandItem.getItem().isCorrectForDrops(mainHandItem, world.getBlockState(position))) {
+                        continue;
+                    }
+
+                    HARVESTED_BLOCKS.add(position);
+                    serverPlayer.interactionManager.tryBreakBlock(position);
+                    HARVESTED_BLOCKS.remove(position);
+                }
+            }
+        }
+        return true;
+    }
+
+    public static List<BlockPos> getBlocksToBeDestroyed(int range, int thickness, BlockPos initalBlockPos, ServerPlayerEntity player) {
+        List<BlockPos> positions = new ArrayList<>();
+        HitResult hit = player.raycast(20, 0, false);
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult blockHit = (BlockHitResult) hit;
+
+
+            if(blockHit.getSide() == Direction.DOWN || blockHit.getSide() == Direction.UP) {
+                for (int y = 0; y <= thickness; y++) {
+                    int depth = blockHit.getSide() == Direction.UP ? initalBlockPos.getY() - y : initalBlockPos.getY() + y;
+                    BlockPos blockPos = new BlockPos(initalBlockPos.getX(), depth, initalBlockPos.getZ());
+                    getBlocksUpDown(range, blockPos, positions);
+                }
+            }
+
+            if(blockHit.getSide() == Direction.NORTH || blockHit.getSide() == Direction.SOUTH) {
+                for (int z = 0; z <= thickness; z++) {
+                    int depth = blockHit.getSide() == Direction.NORTH ? initalBlockPos.getZ() + z : initalBlockPos.getZ() - z;
+                    BlockPos blockPos = new BlockPos(initalBlockPos.getX(), initalBlockPos.getY(), depth);
+                    getBlocksNorthSouth(range, blockPos, positions);
+                }
+
+            }
+
+            if(blockHit.getSide() == Direction.EAST || blockHit.getSide() == Direction.WEST) {
+                for (int x = 0; x <= thickness; x++) {
+                    int depth = blockHit.getSide() == Direction.EAST ? initalBlockPos.getX() - x : initalBlockPos.getX() + x;
+                    BlockPos blockPos = new BlockPos(depth, initalBlockPos.getY(), initalBlockPos.getZ());
+                    getBlocksEastWest(range, blockPos, positions);
+                }
+            }
+        }
+
+        return positions;
+    }
+
+    public static void getBlocksUpDown(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+        for(int x = -range; x <= range; x++) {
+            for(int y = -range; y <= range; y++) {
+                positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY(), initalBlockPos.getZ() + y));
+            }
+        }
+    }
+
+    public static void getBlocksNorthSouth(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+            for(int x = -range; x <= range; x++) {
+                for(int y = -range; y <= range; y++) {
+                    positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY() + y, initalBlockPos.getZ()));
+                }
+            }
+    }
+
+    public static void getBlocksEastWest(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+        for(int x = -range; x <= range; x++) {
+            for(int y = -range; y <= range; y++) {
+                positions.add(new BlockPos(initalBlockPos.getX(), initalBlockPos.getY() + y, initalBlockPos.getZ() + x));
+            }
+        }
+    }
+
+
+}

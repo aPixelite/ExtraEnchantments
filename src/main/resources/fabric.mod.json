@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "extraenchantments",
+	"version": "1.0.0}",
+	"name": "ExtraEnchantments",
+	"description": "A mod that adds extra enchantments",
+	"authors": [
+		"aPixelite"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/extraenchantments/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.apixelite.extra.ExtraEnchantments"
+		],
+		"client": [
+			"net.apixelite.extra.ExtraEnchantmentsClient"
+		],
+		"fabric-datagen": [
+			"net.apixelite.extra.ExtraEnchantmentsDataGenerator"
+		]
+	},
+	"mixins": [
+		"extraenchantments.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.13",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
