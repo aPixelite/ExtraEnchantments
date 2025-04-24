@@ -28,7 +28,9 @@ public class ModPlayerDataSaverMixin {
                 .add(EntityAttributes.MINING_EFFICIENCY)
                 .add(EntityAttributes.SWEEPING_DAMAGE_RATIO)
                 .add(ModEntityAttributes.MINING_DEPTH, 0)
-                .add(ModEntityAttributes.MINING_SPREAD, 0));
+                .add(ModEntityAttributes.MINING_SPREAD, 0)
+                .add(ModEntityAttributes.DEFORESTATION, 0)
+        );
     }
 
 }

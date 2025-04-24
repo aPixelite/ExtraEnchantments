@@ -1,7 +1,9 @@
 {
   "enchantment.extraenchantments.mining_spread": "Mining Spread",
   "enchantment.extraenchantments.tunneler": "Tunneler",
+  "enchantment.extraenchantments.deforestation": "Deforestation",
 
   "attribute.name.mining_spread": "Mining Spread",
-  "attribute.name.mining_depth": "Mining Depth"
+  "attribute.name.mining_depth": "Mining Depth",
+  "attribute.name.deforestation": "Deforestation"
 }

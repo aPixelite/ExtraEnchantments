@@ -1,11 +1,14 @@
 package net.apixelite.extra.event;
 
 import net.apixelite.extra.entity.attribute.ModEntityAttributes;
+import net.apixelite.extra.util.ModTags;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -29,26 +32,39 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
         double mining_depth = player.getAttributeValue(ModEntityAttributes.MINING_DEPTH);
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
-            if (true) {
-                if (HARVESTED_BLOCKS.contains(pos)) {
-                    return true;
-                }
+            if (HARVESTED_BLOCKS.contains(pos)) {
+                return true;
+            }
 
+            if (mainHandItem.isIn(ItemTags.AXES)) {
+                List<BlockPos> list = new ArrayList<>();
+                for (BlockPos position : getLogsToBeDestroyedTest(list, world, serverPlayer, serverPlayer.getMainHandStack(), world.getBlockState(pos), pos)) {
+                    if (pos == position || !mainHandItem.getItem().isCorrectForDrops(mainHandItem, world.getBlockState(position))) {
+                        continue;
+                    }
+                    harvestBlocks(position, serverPlayer);
+                }
+            }
+
+            if (mainHandItem.isIn(ModTags.Items.MINING_TOOLS)) {
                 for (BlockPos position : getBlocksToBeDestroyed(((int) mining_spread), ((int) mining_depth), pos, serverPlayer)) {
                     if (pos == position || !mainHandItem.getItem().isCorrectForDrops(mainHandItem, world.getBlockState(position))) {
                         continue;
                     }
-
-                    HARVESTED_BLOCKS.add(position);
-                    serverPlayer.interactionManager.tryBreakBlock(position);
-                    HARVESTED_BLOCKS.remove(position);
+                    harvestBlocks(position, serverPlayer);
                 }
             }
         }
         return true;
     }
 
-    public static List<BlockPos> getBlocksToBeDestroyed(int range, int thickness, BlockPos initalBlockPos, ServerPlayerEntity player) {
+    private static void harvestBlocks(BlockPos pos, ServerPlayerEntity serverPlayer) {
+        MiningEvent.HARVESTED_BLOCKS.add(pos);
+        serverPlayer.interactionManager.tryBreakBlock(pos);
+        MiningEvent.HARVESTED_BLOCKS.remove(pos);
+    }
+
+    private static List<BlockPos> getBlocksToBeDestroyed(int range, int thickness, BlockPos initalBlockPos, ServerPlayerEntity player) {
         List<BlockPos> positions = new ArrayList<>();
         HitResult hit = player.raycast(20, 0, false);
         if (hit.getType() == HitResult.Type.BLOCK) {
@@ -84,7 +100,7 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
         return positions;
     }
 
-    public static void getBlocksUpDown(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+    private static void getBlocksUpDown(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
         for(int x = -range; x <= range; x++) {
             for(int y = -range; y <= range; y++) {
                 positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY(), initalBlockPos.getZ() + y));
@@ -92,7 +108,7 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
         }
     }
 
-    public static void getBlocksNorthSouth(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+    private static void getBlocksNorthSouth(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
             for(int x = -range; x <= range; x++) {
                 for(int y = -range; y <= range; y++) {
                     positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY() + y, initalBlockPos.getZ()));
@@ -100,13 +116,61 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
             }
     }
 
-    public static void getBlocksEastWest(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
+    private static void getBlocksEastWest(int range, BlockPos initalBlockPos, List<BlockPos> positions) {
         for(int x = -range; x <= range; x++) {
             for(int y = -range; y <= range; y++) {
                 positions.add(new BlockPos(initalBlockPos.getX(), initalBlockPos.getY() + y, initalBlockPos.getZ() + x));
             }
         }
     }
+
+    private static List<BlockPos> getVeinShape(BlockPos pos) {
+        return List.of(
+                pos.up(), pos.down(),
+                pos.north(), pos.south(),
+                pos.east(), pos.west()
+        );
+    }
+
+    private static List<BlockPos> getLogsToBeDestroyedTest(
+            List<BlockPos> positions,
+            World world,
+            ServerPlayerEntity player,
+            ItemStack stack,
+            BlockState initalState,
+            BlockPos initalBlockPos
+    ) {
+        int maxBlocks = 256;
+
+        HitResult hit = player.raycast(20, 0, false);
+
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            List<BlockPos> posToCheck = getVeinShape(initalBlockPos);
+            for (BlockPos pos : posToCheck) {
+                if (positions.size() >= maxBlocks || stack.getDamage() + positions.size() == stack.getMaxDamage()) {
+                    break;
+                }
+
+                if (positions.contains(pos)) {
+                    continue;
+                }
+
+                BlockState state = world.getBlockState(pos);
+                Block block = state.getBlock();
+
+                if (!block.equals(initalState.getBlock()) || !stack.isSuitableFor(state)) {
+                    continue;
+                }
+
+                positions.add(pos);
+
+                getLogsToBeDestroyedTest(positions, world, player, stack, initalState, pos);
+            }
+        }
+
+        return positions;
+    }
+
 
 
 }

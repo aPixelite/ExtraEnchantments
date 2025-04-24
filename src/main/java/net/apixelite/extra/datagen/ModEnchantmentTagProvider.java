@@ -17,6 +17,8 @@ public class ModEnchantmentTagProvider extends FabricTagProvider.EnchantmentTagP
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         this.getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
                 .add(ModEnchantments.MINING_SPREAD)
-                .add(ModEnchantments.TUNNELER);
+                .add(ModEnchantments.TUNNELER)
+                .add(ModEnchantments.DEFORESTATION)
+        ;
     }
 }

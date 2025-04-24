@@ -1,6 +1,7 @@
 package net.apixelite.extra;
 
 import net.apixelite.extra.datagen.ModEnchantmentTagProvider;
+import net.apixelite.extra.datagen.ModItemTagProvider;
 import net.apixelite.extra.datagen.ModRegistryProvider;
 import net.apixelite.extra.enchantment.ModEnchantments;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -14,7 +15,9 @@ public class ExtraEnchantmentsDataGenerator implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
 		pack.addProvider(ModRegistryProvider::new);
+
 		pack.addProvider(ModEnchantmentTagProvider::new);
+		pack.addProvider(ModItemTagProvider::new);
 
 	}
 

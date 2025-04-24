@@ -2,6 +2,7 @@ package net.apixelite.extra.enchantment;
 
 import net.apixelite.extra.ExtraEnchantments;
 import net.apixelite.extra.entity.attribute.ModEntityAttributes;
+import net.apixelite.extra.util.ModTags;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -17,17 +18,18 @@ import net.minecraft.util.Identifier;
 public class ModEnchantments {
     public static final RegistryKey<Enchantment> MINING_SPREAD = of("mining_spread");
     public static final RegistryKey<Enchantment> TUNNELER = of("tunneler");
+    public static final RegistryKey<Enchantment> DEFORESTATION = of("deforestation");
 
-    public static void bootstrap(Registerable<Enchantment> registerable) {
-        var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
-        var items = registerable.getRegistryLookup(RegistryKeys.ITEM);
+    public static void bootstrap(Registerable<Enchantment> registrable) {
+//        var enchantments = registrable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
+        var items = registrable.getRegistryLookup(RegistryKeys.ITEM);
 
         register(
-                registerable,
+                registrable,
                 MINING_SPREAD,
                 Enchantment.builder(
                                 Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
-                                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                                        items.getOrThrow(ModTags.Items.MINING_TOOLS),
                                         2,
                                         3,
                                         Enchantment.leveledCost(15, 15),
@@ -46,11 +48,11 @@ public class ModEnchantments {
                                 )
                         ));
         register(
-                registerable,
+                registrable,
                 TUNNELER,
                 Enchantment.builder(
                                 Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
-                                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                                        items.getOrThrow(ModTags.Items.MINING_TOOLS),
                                         6,
                                         4,
                                         Enchantment.leveledCost(5, 10),
@@ -64,6 +66,29 @@ public class ModEnchantments {
                                 new AttributeEnchantmentEffect(
                                         Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.tunneler"),
                                         ModEntityAttributes.MINING_DEPTH,
+                                        new EnchantmentLevelBasedValue.Linear(2, 1),
+                                        EntityAttributeModifier.Operation.ADD_VALUE
+                                )
+                        ));
+        register(
+                registrable,
+                DEFORESTATION,
+                Enchantment.builder(
+                                Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
+                                        items.getOrThrow(ItemTags.AXES),
+                                        5,
+                                        1,
+                                        Enchantment.constantCost(15),
+                                        Enchantment.constantCost(65),
+                                        8,
+                                        AttributeModifierSlot.MAINHAND
+                                )
+                        )
+                        .addEffect(
+                                EnchantmentEffectComponentTypes.ATTRIBUTES,
+                                new AttributeEnchantmentEffect(
+                                        Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.deforestation"),
+                                        ModEntityAttributes.DEFORESTATION,
                                         new EnchantmentLevelBasedValue.Linear(2, 1),
                                         EntityAttributeModifier.Operation.ADD_VALUE
                                 )
