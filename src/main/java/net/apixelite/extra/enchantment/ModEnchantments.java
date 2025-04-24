@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 
 public class ModEnchantments {
     public static final RegistryKey<Enchantment> MINING_SPREAD = of("mining_spread");
-    public static final RegistryKey<Enchantment> MINING_DEPTH = of("mining_depth");
+    public static final RegistryKey<Enchantment> TUNNELER = of("tunneler");
 
     public static void bootstrap(Registerable<Enchantment> registerable) {
         var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
@@ -47,7 +47,7 @@ public class ModEnchantments {
                         ));
         register(
                 registerable,
-                MINING_DEPTH,
+                TUNNELER,
                 Enchantment.builder(
                                 Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
                                         items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
@@ -62,7 +62,7 @@ public class ModEnchantments {
                         .addEffect(
                                 EnchantmentEffectComponentTypes.ATTRIBUTES,
                                 new AttributeEnchantmentEffect(
-                                        Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.mining_spread"),
+                                        Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.tunneler"),
                                         ModEntityAttributes.MINING_DEPTH,
                                         new EnchantmentLevelBasedValue.Linear(2, 1),
                                         EntityAttributeModifier.Operation.ADD_VALUE

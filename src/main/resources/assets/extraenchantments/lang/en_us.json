@@ -1,6 +1,6 @@
 {
   "enchantment.extraenchantments.mining_spread": "Mining Spread",
-  "enchantment.extraenchantments.mining_depth": "Tunneler",
+  "enchantment.extraenchantments.tunneler": "Tunneler",
 
   "attribute.name.mining_spread": "Mining Spread",
   "attribute.name.mining_depth": "Mining Depth"

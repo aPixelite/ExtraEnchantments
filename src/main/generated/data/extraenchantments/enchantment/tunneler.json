@@ -1,7 +1,7 @@
 {
   "anvil_cost": 3,
   "description": {
-    "translate": "enchantment.extraenchantments.mining_depth"
+    "translate": "enchantment.extraenchantments.tunneler"
   },
   "effects": {
     "minecraft:attributes": [
@@ -12,7 +12,7 @@
           "per_level_above_first": 1.0
         },
         "attribute": "extraenchantments:mining_depth",
-        "id": "extraenchantments:enchantment.mining_spread",
+        "id": "extraenchantments:enchantment.tunneler",
         "operation": "add_value"
       }
     ]
