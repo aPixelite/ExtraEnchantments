@@ -10,19 +10,20 @@
 
 ### Current enchantments
 
-| Enchantment name  |                                Description                                 | Max Level |        Applied to |
-|:------------------|:--------------------------------------------------------------------------:|:---------:|------------------:|
-| **Mining spread** | Mines a `3x3` area. <br/> Each level adds adds 2 blocks to each direction. |     3     | Pickaxes, Shovels |
-| **Tunneler**      |           Mines a straight line.<br/> Every level adds 1 block.            |     5     | Pickaxes, Shovels |
-| **Deforestation** |                Allows you to mine an entire tree in one go.                |     1     |              Axes |
-| **Crippling**     |         Gives the victim `slowness`.<br/>For `3 + level` seconds.          |     3     |      Swords, Axes |
-| **Confusion**     |          Gives the victim `nausea`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
-| **Blindside**     |       Gives the victim `blindness`.<br/>For `3 + level * 2` seconds.       |     3     |      Swords, Axes |
-| **Starvation**    |          Gives the victim `hunger`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
-| **Weakening**     |         Gives the victim `weakness`.<br/>For `3 + level` seconds.          |     3     |      Swords, Axes |
-| **Darkening**     |         Gives the victim `darkness`.<br/>For `3 + level` seconds.          |     3     |      Swords, Axes |
-| **Withering**     |          Gives the victim `wither`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
-| **Venomous**      |          Gives the victim `poison`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
+| Enchantment name  |                                 Description                                  | Max Level |        Applied to |
+|:------------------|:----------------------------------------------------------------------------:|:---------:|------------------:|
+| **Mining spread** |  Mines a `3x3` area. <br/> Each level adds adds 2 blocks to each direction.  |     3     | Pickaxes, Shovels |
+| **Tunneler**      |            Mines a straight line.<br/> Every level adds 1 block.             |     5     | Pickaxes, Shovels |
+| **Veinminer**     |  Allows you to mine an entire vein of ores.<br/> Max blocks is `64 * level`  |     4     |          Pickaxes |
+| **Deforestation** | Allows you to mine an entire tree in one go.<br/> Max blocks is `16 * level` |     4     |              Axes |
+| **Crippling**     |          Gives the victim `slowness`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
+| **Confusion**     |           Gives the victim `nausea`.<br/>For `3 + level` seconds.            |     3     |      Swords, Axes |
+| **Blindside**     |        Gives the victim `blindness`.<br/>For `3 + level * 2` seconds.        |     3     |      Swords, Axes |
+| **Starvation**    |           Gives the victim `hunger`.<br/>For `3 + level` seconds.            |     3     |      Swords, Axes |
+| **Weakening**     |          Gives the victim `weakness`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
+| **Darkening**     |          Gives the victim `darkness`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
+| **Withering**     |           Gives the victim `wither`.<br/>For `3 + level` seconds.            |     3     |      Swords, Axes |
+| **Venomous**      |           Gives the victim `poison`.<br/>For `3 + level` seconds.            |     3     |      Swords, Axes |
 
 
 ## Requirements

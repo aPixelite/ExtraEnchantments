@@ -30,15 +30,19 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
         ItemStack mainHandItem = player.getMainHandStack();
         double mining_spread = player.getAttributeValue(ModEntityAttributes.MINING_SPREAD);
         double mining_depth = player.getAttributeValue(ModEntityAttributes.MINING_DEPTH);
+        double deforestation = player.getAttributeValue(ModEntityAttributes.DEFORESTATION);
+        double vein_miner = player.getAttributeValue(ModEntityAttributes.VEIN_MINER);
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
             if (HARVESTED_BLOCKS.contains(pos)) {
                 return true;
             }
 
-            if (mainHandItem.isIn(ItemTags.AXES)) {
+            if ((mainHandItem.isIn(ItemTags.AXES) && deforestation > 0 && (state.isIn(ModTags.Blocks.DEFORESTABLE))) ||
+                    (mainHandItem.isIn(ItemTags.PICKAXES) && vein_miner > 0 && (state.isIn(ModTags.Blocks.VEIN_MINEABLE)))
+            ) {
                 List<BlockPos> list = new ArrayList<>();
-                for (BlockPos position : getLogsToBeDestroyedTest(list, world, serverPlayer, serverPlayer.getMainHandStack(), world.getBlockState(pos), pos)) {
+                for (BlockPos position : getLogsOresToBeDestroyedTest(list, world, serverPlayer, serverPlayer.getMainHandStack(), world.getBlockState(pos), pos)) {
                     if (pos == position || !mainHandItem.getItem().isCorrectForDrops(mainHandItem, world.getBlockState(position))) {
                         continue;
                     }
@@ -131,8 +135,19 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
                 pos.east(), pos.west()
         );
     }
+    private static List<BlockPos> getTreeShape(BlockPos pos) {
+        List<BlockPos> positions = new ArrayList<>();
 
-    private static List<BlockPos> getLogsToBeDestroyedTest(
+        for (int y = -1; y <= 1; y++)
+            for(int x = -1; x <= 1; x++) {
+                for(int z = -1; z <= 1; z++) {
+                    positions.add(new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
+                }
+            }
+        return positions;
+    }
+
+    private static List<BlockPos> getLogsOresToBeDestroyedTest(
             List<BlockPos> positions,
             World world,
             ServerPlayerEntity player,
@@ -140,12 +155,14 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
             BlockState initalState,
             BlockPos initalBlockPos
     ) {
-        int maxBlocks = 256;
+        int maxBlocks = stack.isIn(ItemTags.PICKAXES) ?
+                ((int) player.getAttributeValue(ModEntityAttributes.VEIN_MINER)) :
+                ((int) player.getAttributeValue(ModEntityAttributes.DEFORESTATION));
 
         HitResult hit = player.raycast(20, 0, false);
 
         if (hit.getType() == HitResult.Type.BLOCK) {
-            List<BlockPos> posToCheck = getVeinShape(initalBlockPos);
+            List<BlockPos> posToCheck = stack.isIn(ItemTags.PICKAXES) ? getVeinShape(initalBlockPos) : getTreeShape(initalBlockPos);
             for (BlockPos pos : posToCheck) {
                 if (positions.size() >= maxBlocks || stack.getDamage() + positions.size() == stack.getMaxDamage()) {
                     break;
@@ -164,7 +181,7 @@ public class MiningEvent implements PlayerBlockBreakEvents.Before {
 
                 positions.add(pos);
 
-                getLogsToBeDestroyedTest(positions, world, player, stack, initalState, pos);
+                getLogsOresToBeDestroyedTest(positions, world, player, stack, initalState, pos);
             }
         }
 

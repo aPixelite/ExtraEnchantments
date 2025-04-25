@@ -20,6 +20,8 @@ import net.minecraft.util.Identifier;
 public class ModEnchantments {
     public static final RegistryKey<Enchantment> MINING_SPREAD = of("mining_spread");
     public static final RegistryKey<Enchantment> TUNNELER = of("tunneler");
+    public static final RegistryKey<Enchantment> VEIN_MINER = of("vein_miner");
+
     public static final RegistryKey<Enchantment> DEFORESTATION = of("deforestation");
 
     public static final RegistryKey<Enchantment> WITHERING = of("withering");
@@ -69,20 +71,38 @@ public class ModEnchantments {
                         EntityAttributeModifier.Operation.ADD_VALUE
                 )));
 
+        register(registrable, VEIN_MINER, Enchantment.builder(
+                Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
+                        items.getOrThrow(ItemTags.PICKAXES),
+                        5,
+                        4,
+                        Enchantment.leveledCost(8, 12),
+                        Enchantment.leveledCost(40, 12),
+                        8,
+                        AttributeModifierSlot.MAINHAND
+                )).exclusiveSet(enchantments.getOrThrow(ModTags.Enchantments.MINING_EXCLUSIVE_SET))
+                .addEffect(EnchantmentEffectComponentTypes.ATTRIBUTES,
+                new AttributeEnchantmentEffect(
+                        Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.vein_miner"),
+                        ModEntityAttributes.VEIN_MINER,
+                        new EnchantmentLevelBasedValue.Linear(64, 64),
+                        EntityAttributeModifier.Operation.ADD_VALUE
+                )));
+
         register(registrable, DEFORESTATION, Enchantment.builder(
                 Enchantment.definition( // see https://minecraft.wiki/w/Enchantment_definition
                         items.getOrThrow(ItemTags.AXES),
                         5,
-                        1,
-                        Enchantment.constantCost(15),
-                        Enchantment.constantCost(65),
+                        4,
+                        Enchantment.leveledCost(8, 12),
+                        Enchantment.leveledCost(40, 12),
                         8,
                         AttributeModifierSlot.MAINHAND
                 )).addEffect(EnchantmentEffectComponentTypes.ATTRIBUTES,
                 new AttributeEnchantmentEffect(
                         Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.deforestation"),
                         ModEntityAttributes.DEFORESTATION,
-                        new EnchantmentLevelBasedValue.Linear(2, 1),
+                        new EnchantmentLevelBasedValue.Linear(16, 16),
                         EntityAttributeModifier.Operation.ADD_VALUE
                 )));
 

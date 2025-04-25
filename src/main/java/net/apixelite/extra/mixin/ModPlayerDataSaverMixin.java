@@ -30,6 +30,7 @@ public class ModPlayerDataSaverMixin {
                 .add(ModEntityAttributes.MINING_DEPTH, 0)
                 .add(ModEntityAttributes.MINING_SPREAD, 0)
                 .add(ModEntityAttributes.DEFORESTATION, 0)
+                .add(ModEntityAttributes.VEIN_MINER, 0)
         );
     }
 

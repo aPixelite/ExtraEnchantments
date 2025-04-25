@@ -1,22 +1,23 @@
 {
   "anvil_cost": 8,
   "description": {
-    "translate": "enchantment.extraenchantments.deforestation"
+    "translate": "enchantment.extraenchantments.vein_miner"
   },
   "effects": {
     "minecraft:attributes": [
       {
         "amount": {
           "type": "minecraft:linear",
-          "base": 16.0,
-          "per_level_above_first": 16.0
+          "base": 64.0,
+          "per_level_above_first": 64.0
         },
-        "attribute": "extraenchantments:deforestation",
-        "id": "extraenchantments:enchantment.deforestation",
+        "attribute": "extraenchantments:vein_miner",
+        "id": "extraenchantments:enchantment.vein_miner",
         "operation": "add_value"
       }
     ]
   },
+  "exclusive_set": "#extraenchantments:mining_exclusive_set",
   "max_cost": {
     "base": 40,
     "per_level_above_first": 12
@@ -29,6 +30,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:axes",
+  "supported_items": "#minecraft:pickaxes",
   "weight": 5
 }

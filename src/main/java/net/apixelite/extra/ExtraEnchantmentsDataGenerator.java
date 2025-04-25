@@ -1,5 +1,6 @@
 package net.apixelite.extra;
 
+import net.apixelite.extra.datagen.ModBlockTagProvider;
 import net.apixelite.extra.datagen.ModEnchantmentTagProvider;
 import net.apixelite.extra.datagen.ModItemTagProvider;
 import net.apixelite.extra.datagen.ModRegistryProvider;
@@ -18,6 +19,7 @@ public class ExtraEnchantmentsDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ModEnchantmentTagProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
+		pack.addProvider(ModBlockTagProvider::new);
 
 	}
 

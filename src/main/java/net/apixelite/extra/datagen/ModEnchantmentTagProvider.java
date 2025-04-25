@@ -19,7 +19,9 @@ public class ModEnchantmentTagProvider extends FabricTagProvider.EnchantmentTagP
         this.getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
                 .add(ModEnchantments.MINING_SPREAD)
                 .add(ModEnchantments.TUNNELER)
+
                 .add(ModEnchantments.DEFORESTATION)
+
                 .add(ModEnchantments.WITHERING)
                 .add(ModEnchantments.VENOMOUS)
                 .add(ModEnchantments.CRIPPLING)
@@ -39,6 +41,12 @@ public class ModEnchantmentTagProvider extends FabricTagProvider.EnchantmentTagP
                 .add(ModEnchantments.STARVATION)
                 .add(ModEnchantments.WEAKENING)
                 .add(ModEnchantments.DARKENING)
+        ;
+
+        this.getOrCreateTagBuilder(ModTags.Enchantments.MINING_EXCLUSIVE_SET)
+                .add(ModEnchantments.MINING_SPREAD)
+                .add(ModEnchantments.TUNNELER)
+                .add(ModEnchantments.VEIN_MINER)
         ;
     }
 }
