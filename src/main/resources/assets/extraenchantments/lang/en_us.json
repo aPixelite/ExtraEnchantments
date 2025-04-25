@@ -1,7 +1,17 @@
 {
   "enchantment.extraenchantments.mining_spread": "Mining Spread",
   "enchantment.extraenchantments.tunneler": "Tunneler",
+
   "enchantment.extraenchantments.deforestation": "Deforestation",
+
+  "enchantment.extraenchantments.withering": "Withering",
+  "enchantment.extraenchantments.venomous": "Venomous",
+  "enchantment.extraenchantments.crippling": "Crippling",
+  "enchantment.extraenchantments.confusion": "Confusion",
+  "enchantment.extraenchantments.blindside": "Blindside",
+  "enchantment.extraenchantments.starvation": "Starvation",
+  "enchantment.extraenchantments.weakening": "Weakening",
+  "enchantment.extraenchantments.darkening": "Darkening",
 
   "attribute.name.mining_spread": "Mining Spread",
   "attribute.name.mining_depth": "Mining Depth",

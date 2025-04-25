@@ -1,5 +1,6 @@
 package net.apixelite.extra;
 
+import net.apixelite.extra.enchantment.ModEnchantmentEffects;
 import net.apixelite.extra.entity.attribute.ModEntityAttributes;
 import net.apixelite.extra.event.MiningEvent;
 import net.fabricmc.api.ModInitializer;
@@ -16,6 +17,7 @@ public class ExtraEnchantments implements ModInitializer {
 	public void onInitialize() {
 
 		ModEntityAttributes.registerModEntityAttributes();
+		ModEnchantmentEffects.registerEnchantmentEffects();
 
 		PlayerBlockBreakEvents.BEFORE.register(new MiningEvent());
 

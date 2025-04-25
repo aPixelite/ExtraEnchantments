@@ -1,0 +1,33 @@
+{
+  "anvil_cost": 5,
+  "description": {
+    "translate": "enchantment.extraenchantments.darkening"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "extraenchantments:darkening",
+          "level": 1
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "exclusive_set": "#extraenchantments:status_effect_exclusive",
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 6
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 6
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:swords",
+  "weight": 8
+}

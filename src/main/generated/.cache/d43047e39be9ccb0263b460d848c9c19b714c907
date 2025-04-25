@@ -1,2 +1,3 @@
 // 1.21.5	-999999999-01-01T00:00:00	ExtraEnchantments/Tags for minecraft:enchantment
-83698cbe3f2cf06b26680156e937fd861cda18b9 data/minecraft/tags/enchantment/non_treasure.json
+5d6a6854a31a9c8d2e00d63aca12f9469da25445 data/extraenchantments/tags/enchantment/status_effect_exclusive.json
+cdca2600671d9af222185d39a872984609d5fc31 data/minecraft/tags/enchantment/non_treasure.json
