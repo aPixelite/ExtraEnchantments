@@ -14,7 +14,7 @@
 |:------------------|:----------------------------------------------------------------------------:|:---------:|------------------:|
 | **Mining spread** |  Mines a `3x3` area. <br/> Each level adds adds 2 blocks to each direction.  |     3     | Pickaxes, Shovels |
 | **Tunneler**      |            Mines a straight line.<br/> Every level adds 1 block.             |     5     | Pickaxes, Shovels |
-| **Veinminer**     |  Allows you to mine an entire vein of ores.<br/> Max blocks is `64 * level`  |     4     |          Pickaxes |
+| **Veinminer**     |  Allows you to mine an entire vein of ores.<br/> Max blocks is `8 * level`   |     4     |          Pickaxes |
 | **Deforestation** | Allows you to mine an entire tree in one go.<br/> Max blocks is `16 * level` |     4     |              Axes |
 | **Crippling**     |          Gives the victim `slowness`.<br/>For `3 + level` seconds.           |     3     |      Swords, Axes |
 | **Confusion**     |           Gives the victim `nausea`.<br/>For `3 + level` seconds.            |     3     |      Swords, Axes |

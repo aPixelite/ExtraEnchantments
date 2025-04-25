@@ -8,8 +8,8 @@
       {
         "amount": {
           "type": "minecraft:linear",
-          "base": 64.0,
-          "per_level_above_first": 64.0
+          "base": 8.0,
+          "per_level_above_first": 8.0
         },
         "attribute": "extraenchantments:vein_miner",
         "id": "extraenchantments:enchantment.vein_miner",

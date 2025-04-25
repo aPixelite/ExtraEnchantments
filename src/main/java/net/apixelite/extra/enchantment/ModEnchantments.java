@@ -85,7 +85,7 @@ public class ModEnchantments {
                 new AttributeEnchantmentEffect(
                         Identifier.of(ExtraEnchantments.MOD_ID, "enchantment.vein_miner"),
                         ModEntityAttributes.VEIN_MINER,
-                        new EnchantmentLevelBasedValue.Linear(64, 64),
+                        new EnchantmentLevelBasedValue.Linear(8, 8),
                         EntityAttributeModifier.Operation.ADD_VALUE
                 )));
 
